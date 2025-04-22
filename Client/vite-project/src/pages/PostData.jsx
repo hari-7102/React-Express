@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const PostData = () => {
   const navigate = useNavigate("");
 
-  const [isuserId, setuserId] = useState("");
+  // const [isuserId, setuserId] = useState("");
   const [isuserName, setuserName] = useState("");
   const [isuserPhone, setuserPhone] = useState("");
   const [isuserEmail, setuserEmail] = useState("");
@@ -15,7 +15,7 @@ const PostData = () => {
 
   const handleSubmit = async () => {
     const sendableData = {
-      userId: isuserId,
+      // userId: isuserId,
       userName: isuserName,
       userPhone: isuserPhone,
       userEmail: isuserEmail,
@@ -38,46 +38,59 @@ const PostData = () => {
   return (
     <div className="">
       <Navbar />
-      <p className="text-3xl px-12 py-4">Input Data to API </p>
-      <div className=" px-12   flex flex-col justify-start items-start  gap-5">
-        <input
+      <p className="text-3xl mb-3 px-12 py-4   font-semibold">Input Data to API </p>
+      <div className=" px-12   flex flex-col justify-start items-start  gap-2">
+        {/* <input
           type="number"
           placeholder="UserId"
           required
           className="w-1/2 border border-gray-700 rounded-lg py-2 px-5 placeholder:text-xl"
           onChange={(e) => setuserId(e.target.value)}
           value={isuserId}
-        />
+        /> */}
+        <p className="text-xl text-start"  >Name</p>
         <input
           type="text"
           placeholder="User Name"
           required
-          className="w-1/2 border border-gray-700 rounded-lg py-2 px-5 placeholder:text-xl"
+          className="w-1/2 bg-gray-100 rounded-lg py-2 px-5 mb-4 placeholder:text-xl"
           onChange={(e) => setuserName(e.target.value)}
           value={isuserName}
         />
+
+        <p className="text-xl text-start"  >Phone</p>
         <input
-          type="number"
+          type="text"
           maxLength={10}
           placeholder="UserPhone"
           required
-          className="w-1/2 border border-gray-700 rounded-lg py-2 px-5 placeholder:text-xl"
-          onChange={(e) => setuserPhone(e.target.value)}
+          className="w-1/2 bg-gray-100 rounded-lg py-2 px-5 mb-4  placeholder:text-xl"
+          onChange={(e) => {
+            const value = e.target.value;
+            // Allow only digits and limit to 10 characters
+            if (/^\d{0,10}$/.test(value)) {
+              setuserPhone(value);
+            }
+          }}
           value={isuserPhone}
         />
+        <p className="text-xl text-start"  >Email</p>
+
         <input
           type="email"
           required
           placeholder="User Email"
-          className="w-1/2 border border-gray-700 rounded-lg py-2 px-5 placeholder:text-xl"
+          className="w-1/2 bg-gray-100 rounded-lg py-2 px-5  mb-4  placeholder:text-xl"
           onChange={(e) => setuserEmail(e.target.value)}
           value={isuserEmail}
         />
+
+        <p className="text-xl text-start"  >Gender</p>
         <input
           type="text"
           required
           placeholder="User Gender"
-          className="w-1/2 border border-gray-700 rounded-lg py-2 px-5 placeholder:text-xl"
+          className="w-1/2 bg-gray-100 rounded-lg py-2 px-5  mb-4  placeholder:text-xl"
           onChange={(e) => setuserGender(e.target.value)}
           value={isuserGender}
         />

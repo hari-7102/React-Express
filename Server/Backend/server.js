@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const app = express();
 const port = 3000;
 const cors = require('cors');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 //Handling the localhost port
 app.use(cors())
 
@@ -34,6 +35,11 @@ const WorkerSchema = new mongoose.Schema({
 
 });
 
+//automatically increase the UserId in Web Site 
+WorkerSchema.plugin(AutoIncrement, { inc_field: 'userId' });
+
+
+
 //Create an Model in DB 
 const Worker = mongoose.model('Worker' , WorkerSchema);
 
@@ -61,8 +67,10 @@ app.post('/postdetails', async (req, res) => {
         gender: workerData.userGender
       });
     } catch (error) {
+
       console.error("Error saving worker:", error.message);
       res.status(500).json({ error: error.message });
+      
     }
   });
 
@@ -181,8 +189,11 @@ app.delete("/postdetails/:id", async (req, res) => {
 
 
 
-
+//Server running with Help of Port Number 
 app.listen(port, () => {
     console.log(`Example app listening on port http://localhost:${port}`);
   });
-  
+
+
+
+

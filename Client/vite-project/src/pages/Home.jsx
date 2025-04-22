@@ -1,51 +1,50 @@
-import React from 'react'
+import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Navbar from '../component/Navbar';
+import Navbar from "../component/Navbar";
 
-import { useNavigate , useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Home = () => {
+  const location = useLocation();
 
-    const location = useLocation()
+  const navigate = useNavigate("");
+  const [isDeleted, setIsDeleted] = useState(false);
+  const [apidata, Setapidata] = useState([]);
 
-    const navigate = useNavigate('')
-    const [isDeleted, setIsDeleted] = useState(false);
-    const [apidata, Setapidata] = useState([]);
+  const getapi = async () => {
+    const response = await axios.get("http://localhost:3000/getdetails");
 
-    const getapi = async () => {
-      const response = await axios.get("http://localhost:3000/getdetails");
-  
     //   console.log("response", response);
-  
-      Setapidata(response.data);
+
+    Setapidata(response.data);
     //   console.log("respodne", response.data);
-    };
+  };
 
-    const handleDelete = async (id) => {
-        
-        const responser = await axios.delete(`http://localhost:3000/postdetails/${id}`, {
-         method: 'DELETE',
-         
-   
-       });
-       navigate(0)
-       console.log(responser)
-    };
+  const handleDelete = async (id) => {
+    const responser = await axios.delete(
+      `http://localhost:3000/postdetails/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
+    navigate(0);
+    console.log(responser);
+  };
 
+  useEffect(() => {
+    handleDelete();
+  }, [isDeleted]);
 
-    useEffect(()=>{
-        handleDelete()
-    },[isDeleted])
-  
-    useEffect(() => {
-      getapi();
-    }, []);
-
+  useEffect(() => {
+    getapi();
+  }, []);
 
   return (
-     <div className=" text-start  ">
-      <p><Navbar/></p>
+    <div className=" text-start  ">
+      <p>
+        <Navbar />
+      </p>
       <>
         <div className="overflow-x-auto p-4  ">
           <table className="min-w-1/2 w-full  border-collapse bg-white rounded-lg shadow-md">
@@ -66,13 +65,26 @@ const Home = () => {
                   <td className="py-3 px-6">{item.userName}</td>
                   <td className="py-3 px-6">{item.userPhone}</td>
                   <td className="py-3 px-6">{item.userEmail}</td>
-                  <td className="py-3 px-6">{item.userGender}</td>
-
-                  <td>
-                    <button onClick={(e) => navigate('/update', {state : item._id})} className='text-white cursor-pointer bg-green-800 px-5 py-1 rounded-2xl'>Update</button>
-                    <button onClick={(e) => handleDelete(item._id)} className='text-white cursor-pointer bg-red-800 px-5 py-1 rounded-2xl'>Delete</button>
+                  <td className="py-3 px-6 text-center">
+                    <span className="bg-gray-200 px-3 py-1.5 text-center rounded-3xl">
+                      {item.userGender}
+                    </span>
                   </td>
 
+                  <td className="py-3 px-6 flex justify-center gap-2">
+                    <button
+                      onClick={(e) => navigate("/update", { state: item._id })}
+                      className="text-white cursor-pointer bg-green-800 px-5 py-1 rounded-2xl"
+                    >
+                      Update
+                    </button>
+                    <button
+                      onClick={(e) => handleDelete(item._id)}
+                      className="text-white cursor-pointer bg-red-800 px-5 py-1 rounded-2xl"
+                    >
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -80,7 +92,7 @@ const Home = () => {
         </div>
       </>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

@@ -16,7 +16,7 @@ const Navbar = () => {
       <nav className="bg-gray-200">
         <ul className="flex justify-center text-xl items-start  gap-6 py-4">
           {nav.map((item , index ) =>(
-              <p className={` px-4 py-1 ${location.pathname == item.to ? 'bg-amber-300' : 'underline underline-offset-2'}  `}>
+              <p className={` px-4 py-1 ${location.pathname == item.to ? 'bg-amber-300 rounded-2xl' : 'underline underline-offset-2'}  `}>
               <li><Link to={item.to}>{item.name}</Link></li>
             </p>
           ))
